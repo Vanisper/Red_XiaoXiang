@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        #dplayer {
+            height: 100vh;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="dplayer"></div>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.0.10/dist/hls.min.js" integrity="sha256-dK0k9pnlsWE935+vhV9D2bC/YgyPNcbMdq56/oHpJ2I=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dplayer@1.26.0/dist/DPlayer.min.js" integrity="sha256-OJg03lDZP0NAcl3waC9OT5jEa8XZ8SM2n081Ik953o4=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function getParams(key) {
+            var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) {
+                return unescape(r[2]);
+            }
+            return 1;
+        };
+        
+        console.log("参数videolist:"+getParams("videolist"));
+    </script>
+    <script>
+        // 定义视频列表
+        let myVideoList = {
+            one: 'https://hls.cntv.myhwcdn.cn/asp/hls/main/0303000a/3/default/a9cf95d3e7f9466a867c5a899761d882/main.m3u8?maxbr=2048',
+            two: 'https://newcntv.qcloudcdn.com/asp/hls/main/0303000a/3/default/5f7160f8859043c8a9e69664c417a34f/main.m3u8?maxbr=2048',
+            three: 'https://hls.cntv.myhwcdn.cn/asp/hls/main/0303000a/3/default/9873b70ae61a4b1e867d1b96c2beaaa6/main.m3u8?maxbr=2048',
+            four: 'https://hls.cntv.myhwcdn.cn/asp/hls/main/0303000a/3/default/fb59bd3406df4db7a25f10ec80d83fe6/main.m3u8?maxbr=2048',
+            five: 'https://newcntv.qcloudcdn.com/asp/hls/main/0303000a/3/default/3340060129da478b9d2a0118293a22f2/main.m3u8?maxbr=2048'
+        }
+        if (getParams("videolist")==1) {
+            videolist = myVideoList.one;
+            // myTitle.innerHTML = myTitleList.one;
+        }else if (getParams("videolist")==2) {
+            videolist = myVideoList.two;
+            // myTitle.innerHTML = myTitleList.two;
+        }else if (getParams("videolist")==3) {
+            videolist = myVideoList.three;
+            // myTitle.innerHTML = myTitleList.three;
+        }else if (getParams("videolist")==4) {
+            videolist = myVideoList.four;
+            // myTitle.innerHTML = myTitleList.four;
+        }else if (getParams("videolist")==5) {
+            videolist = myVideoList.five;
+            // myTitle.innerHTML = myTitleList.five;
+        }
+        
+        // console.log(myVideoList.one);
+        const dp = new DPlayer({
+            autoplay: false,
+            theme: '#FADFA3',
+            loop: true,
+            lang: 'zh-cn',
+            screenshot: true,
+            hotkey: true,
+            preload: 'auto',
+            logo: './img/红色潇湘-01.svg',
+            volume: 0.7,
+            mutex: true,
+            container: document.getElementById('dplayer'),
+            video: {
+                    url: videolist,
+                }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+#mainShow {
+    position: relative;
+    width: 85%;
+    overflow: hidden;
+    margin: 20px auto 0;
+    border-radius: 5px;
+    background-color: #fff;
+    span {
+        display: flex;
+        position: relative;
+        font-size: 20px;
+        font-weight: 700;
+        left: 15px;
+        margin-top: 5px;
+        color: #878787;
+        &::after {
+            content: "查看更多";
+            position: absolute;
+            right: 0;
+            top: 4px;
+            transform: translateX(-110px);
+            font-size: 15px;
+            font-weight: 200;
+        }
+        i {
+            &:nth-of-type(1) {
+                margin-left: auto;
+            }
+            transform: translateX(-40px);
+            margin: 0 5px;
+            padding: 0 3px;
+            cursor: pointer;
+            background-color: rgb(165, 165, 165);
+            border-radius: 5px;
+            &::before {
+                position: relative;
+                font-size: 18px;
+                top: 3px;
+                color: white;
+            }
+        }
+    }
+    .container {
+        margin: 0 auto;
+        display: flex;
+        .wrap {
+            display: flex;
+            transition: all 700ms;
+            // overflow-x: auto;
+            // &::-webkit-scrollbar {
+            //     height: 10px;
+            // }
+            // &::-webkit-scrollbar-thumb {
+            //     background-color: #e0d6a966;
+            //     border-radius: 10px;
+            // }
+            // &::-webkit-scrollbar-track {
+            //     background-color: #eee;
+            //     border-radius: 10px;
+            // }
+            .main-show {
+                position: relative;
+                flex-shrink: 0;
+                padding: 0 5px;
+                margin: 10px 10px;
+                &:nth-of-type(1) .show-background {
+                    background-image: url(../img/video/1_三三一厂.jpg); 
+                }
+                &:nth-of-type(2) .show-background {
+                    background-image: url(../img/video/2_株洲大桥.jpg); 
+                }
+                &:nth-of-type(3) .show-background {
+                    background-image: url(../img/video/3_株洲铁路货运编组站\(石峰区\).jpg); 
+                }
+                &:nth-of-type(4) .show-background {
+                    background-image: url(../img/video/4_株洲市株洲高新技术产业开发区.jpg); 
+                }
+                &:nth-of-type(5) .show-background {
+                    background-image: url(../img/video/5_湘江桥.png); 
+                }
+                a {
+                    height: 100%;
+                    width: 100%;
+                    .show-background {
+                        height: 150px;
+                        background-repeat: no-repeat;
+                        background-position-y: center;
+                        background-position-x: center;
+                        background-size: cover;
+                        border-radius: 5px;
+                        transition: all 200ms;
+                    }
+
+                    &:hover .show-background {
+                        box-shadow: 0 0 10px 0 rgb(0 0 0 / 30%);
+                    }
+                }
+                h1 {
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translate(-50%, 0);
+                    color: honeydew;
+                    font-size: 25px;
+                    white-space: nowrap;
+                }
+                @media screen and (max-width: 780px) {
+                    h1 {
+                        font-size: 18px;
+                    }
+                }
+            }
+
+        }
+    }
+}

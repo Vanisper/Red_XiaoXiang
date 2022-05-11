@@ -1,0 +1,99 @@
+#loading {
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99999;
+}
+#loading main {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    animation: myloading 3s linear infinite;
+}
+#loading main div {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    display: flex;
+}
+#loading main div::before {
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 15px;
+    height: 15px;
+    line-height: 15px;
+    opacity: .5;
+    color: #fff;
+}
+#loading main div:nth-of-type(1) {
+    background-color: #ec7b58;
+    left: 0;
+    top: 0;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-bottom-left-radius: 50%;
+    transform: translate(-3px, -3px);
+}
+#loading main div:nth-of-type(1)::before {
+    content: '红';
+}
+#loading main div:nth-of-type(2) {
+    background-color: #d4dca7;
+    right: 0;
+    top: 0;
+    border-top-right-radius: 50%;
+    border-top-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    transform: translate(3px, -3px);
+}
+#loading main div:nth-of-type(2)::before {
+    content: '色';
+}
+#loading main div:nth-of-type(3) {
+    background-color: #5a7e81;
+    left: 0;
+    bottom: 0;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-top-left-radius: 50%;
+    transform: translate(-3px, 3px);
+}
+#loading main div:nth-of-type(3)::before {
+    content: '潇';
+}
+#loading main div:nth-of-type(4) {
+    background-color: #44bba7;
+    right: 0;
+    bottom: 0;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-top-right-radius: 50%;
+    transform: translate(3px, 3px);
+}
+#loading main div:nth-of-type(4)::before {
+    content: '湘';
+}
+#loading main span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: gray;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+@keyframes myloading {
+    to {
+        transform: rotate(360deg);
+    }
+}

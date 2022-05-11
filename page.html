@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面标题</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        ::selection {
+            background-color: #545c64;
+            color: #ffd04b;
+        }
+
+        li {
+            list-style: none;
+            display: inline-block;
+        }
+
+        #title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #title h1 {
+            display: inline-block;
+            color: rgb(0, 0, 0);
+        }
+
+        #title p {
+            margin-top: 20px;
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        #content {
+            display: flex;
+            flex-direction: column;
+            width: 70%;
+            margin: 30px auto;
+        }
+
+        #content p {
+            text-indent: 2em;
+            padding: 10px;
+            color: rgb(83, 83, 83);
+        }
+
+        #content ct {
+            padding: 10px 0;
+        }
+
+        #content ct img {
+            display: block;
+            margin: 10px auto;
+            width: 90%;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div id="title">
+            <h1>标题<i onclick="readPage(1)" class="fa fa-file-audio-o" aria-hidden="true"
+                    style="margin-left: 10px;font-size: 18px;color: rgba(0, 0, 0, 0.6);cursor: pointer;"  title="语音朗读"></i></h1>
+            <p class="info">
+                发布时间：1970-01-01 00:00
+                【字体大小：
+                <a href="javascript:changeSize(24)" style="color: rgba(0, 0, 0, 0.5);">大</a>
+                <a href="javascript:changeSize(18)" style="color: rgba(0, 0, 0, 0.5);">中</a>
+                <a href="javascript:changeSize(12)" style="color: rgba(0, 0, 0, 0.5);">小</a>
+                】
+            </p>
+            <p class="from">
+                来源：<a href="#" target="_blank" style="color: inherit;">来源网站</a>
+            </p>
+        </div>
+        <div id="content">
+            <video src="" id="myVideo" style="display: none;width: 90%;margin: 0 auto;" controls onclick=""></video>
+            <audio src="" autoplay></audio>
+            <ct>
+                <p></p>
+            </ct>
+        </div>
+        <script>
+            window.onload = function () {
+                // 获取传入参数
+                getJSON(getUrlParams("page"));
+                console.log(getUrlParams("Title"));
+            }
+            
+            // 字体改变
+            function changeSize(FontSize) {
+                let pageContent = document.querySelector("ct");
+                pageContent.style.fontSize = `${FontSize}px`;
+                // console.log(pageContent.style.fontSize);
+            }
+            // 文章朗读
+            function readPage(flag) {
+                // 上限905字
+                let pageContent = document.querySelectorAll("ct p");
+                let audioContent = "";
+                for (const key of pageContent) {
+                    audioContent += key.innerHTML;
+                }
+                console.log(audioContent.length);
+                if (audioContent.length>905) {
+                    audioContent = audioContent.slice(0,906);
+                }
+                // let audio = `http://tsn.baidu.com/text2audio?rand=1060&ctp=1&cuid=8668151&tok=24.564b5d37f97e7599fb38d900a6b4e2c5.2592000.1632495991.282335-8668151&lan=zh&vol=7&per=2&tex=${audioContent}`;
+                let audio = `http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=${audioContent}`;
+                let audioCover = document.querySelector("#content audio");
+                let readControl = document.querySelector("h1 i");
+                if (flag==1) {
+                    audioCover.setAttribute('src', `${audio}`);
+                    audioCover.setAttribute("autoplay","true");
+                    readControl.setAttribute("onclick","readPage(2)");
+                } else if (flag==2) {
+                    audioCover.pause();
+                    readControl.setAttribute("onclick","readPage(3)");
+                } else {
+                    audioCover.play();
+                    readControl.setAttribute("onclick","readPage(2)");
+                }
+            }
+
+            function getJSON(pageIndex) {
+                var url = `pages/pages${pageIndex}.json`/*json文件url，本地的就写本地的位置，如果是服务器的就写服务器的路径*/
+                var request = new XMLHttpRequest();
+                request.open("get", url);/*设置请求方法与路径*/
+                request.send(null);/*不发送数据到服务器*/
+                request.onload = function () {/*XHR对象获取到返回信息后执行*/
+                    if (request.status == 200) {/*返回状态为200，即为数据获取成功*/
+                        myjson = JSON.parse(request.responseText);
+                        let tempJson;
+                        if (pageIndex==1) {
+                            tempJson = myjson.pages1;
+                        } else if (pageIndex==2) {
+                            tempJson = myjson.pages2;
+                        } else if (pageIndex==3) {
+                            tempJson = myjson.pages3;
+                        }
+                        // console.log(tempJson);
+                        for (var i = 0; i < tempJson.length; i++) {
+                            let title = tempJson[i].Title;
+                            if (title == getUrlParams("Title")) {
+                                // console.log(title);
+                                let pageVideo = document.querySelector("#content video");
+                                if (title == "走进株洲") {
+                                    // pageVideo.attributes.src
+                                    pageVideo.setAttribute("src",`${tempJson[i].Resources}`);
+                                    pageVideo.style.display = "";
+                                } else if (title == "我市召开首场新冠肺炎疫情防控工作新闻发布会") {
+                                    pageVideo.setAttribute("src",`${tempJson[i].Resources}`);
+                                    pageVideo.style.display = "";
+                                }
+                                let MainTitle = document.querySelector("title");
+                                MainTitle.innerHTML = `${title}`;
+                                let pageContent = document.querySelector("ct");
+                                let pageTitle = document.querySelector("h1");
+                                let pageTime = document.querySelector(".info");
+                                let pageFrom = document.querySelector(".from");
+                                pageContent.innerHTML = tempJson[i].Content;
+                                pageTitle.innerHTML = tempJson[i].Title+`<i onclick="readPage(1)" class="fa fa-file-audio-o" aria-hidden="true"
+                    style="margin-left: 10px;font-size: 18px;color: rgba(0, 0, 0, 0.6);cursor: pointer;" title="语音朗读"></i>`;
+                                pageTime.innerHTML = `
+                                发布时间：${tempJson[i].Time}
+                                【字体大小：
+                                <a href="javascript:changeSize(24)" style="color: rgba(0, 0, 0, 0.5);">大</a>
+                                <a href="javascript:changeSize(18)" style="color: rgba(0, 0, 0, 0.5);">中</a>
+                                <a href="javascript:changeSize(12)" style="color: rgba(0, 0, 0, 0.5);">小</a>
+                                】`;
+                                pageFrom.innerHTML = `
+                                来源：<a href="${tempJson[i].FromLink}" target="_blank" style="color: inherit;">${tempJson[i].FromWeb}</a>`;
+                            }
+                        }
+                    }
+                }
+            }
+
+            function getUrlParams(key) {
+                var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) {
+                    if (r[2] == '') {
+                        return null;
+                    } else {
+                        return unescape(getCharFromUtf8(r[2]));
+                    }
+                }
+            };
+            //将URL中的UTF-8字符串转成中文字符串  
+            function getCharFromUtf8(str) {
+                var cstr = "";
+                var nOffset = 0;
+                if (str == "")
+                    return "";
+                str = str.toLowerCase();
+                nOffset = str.indexOf("%e");
+                if (nOffset == -1)
+                    return str;
+                while (nOffset != -1) {
+                    cstr += str.substr(0, nOffset);
+                    str = str.substr(nOffset, str.length - nOffset);
+                    if (str == "" || str.length < 9)
+                        return cstr;
+                    cstr += utf8ToChar(str.substr(0, 9));
+                    str = str.substr(9, str.length - 9);
+                    nOffset = str.indexOf("%e");
+                }
+                return cstr + str;
+            }
+            //将编码转换成字符  
+            function utf8ToChar(str) {
+                var iCode, iCode1, iCode2;
+                iCode = parseInt("0x" + str.substr(1, 2));
+                iCode1 = parseInt("0x" + str.substr(4, 2));
+                iCode2 = parseInt("0x" + str.substr(7, 2));
+                return String.fromCharCode(((iCode & 0x0F) << 12) | ((iCode1 & 0x3F) << 6) | (iCode2 & 0x3F));
+            }
+        </script>
+    </section>
+</body>
+
+</html>

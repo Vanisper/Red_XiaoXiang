@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>红色潇湘</title>
+    <link rel="shortcut icon" href="./favicon.svg" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css"
+    />
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      a {
+        text-decoration: none;
+        color: #f3f3f3;
+      }
+      /* html::-webkit-scrollbar {
+				display: none;
+			} */
+      html::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      html::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        height: 50px;
+        outline-offset: -2px;
+        outline: 2px solid #fff;
+        border-radius: 4px;
+        border: 2px solid #fff;
+      }
+      html::-webkit-scrollbar-track-piece {
+        background-color: #fff;
+        border-radius: 0;
+      }
+
+      ::selection {
+        background-color: #545c64;
+        color: #ffd04b;
+      }
+      body {
+        /* height: 300vh; */
+        background-color: #f5f5f5;
+      }
+    </style>
+    <link rel="stylesheet" href="./css/loading.css" />
+    <!-- <script src="./js/loading.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="./css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="./css/menu_btn.css" />
+    <link rel="stylesheet" type="text/css" href="./css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="./css/nav-side.css" />
+    <link rel="stylesheet" type="text/css" href="./css/mainShow.css" />
+    <link rel="stylesheet" type="text/css" href="./css/footer.css" />
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <!-- 我的一言接口 -->
+    <script
+      type="text/javascript"
+      src="./api/siyue/index.php?encode=js&charset=utf-8"
+    ></script>
+    <!-- layer -->
+    <script src="./js/layer/layer/layer.js"></script>
+  </head>
+  <body>
+    <!-- screen -->
+    <section class="screen">
+      <div id="screen">
+        <!-- 滚动一个页面 -->
+        <div id="down" onclick="toMain()">
+          <svg
+            t="1630030518616"
+            class="icon"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="6215"
+            width="32"
+            height="32"
+          >
+            <path
+              d="M512 0C230.4 0 0 230.4 0 512s230.4 512 512 512 512-230.4 512-512-230.4-512-512-512z m0 729.6L211.2 428.8l89.6-89.6L512 550.4l211.2-211.2 89.6 89.6L512 729.6z"
+              fill="#fff"
+              p-id="6216"
+              data-spm-anchor-id="a313x.7781069.0.i22"
+              class="selected"
+            ></path>
+          </svg>
+        </div>
+        <script>
+          function toMain() {
+            // 设置平滑滚动
+            document.documentElement.style.scrollBehavior = 'smooth'
+            document.body.style.scrollBehavior = 'smooth'
+            // 以下两种方式是达到同一种效果
+            // *body* 不适用于页面具有 DTD, 即声明了DOCTYPE
+            // *documentElement* 适用于DTD【此属性相当于:root即html层级, 比前者高一个层级, 是最高的层级】
+            document.body.scrollTop = winHeight
+            document.documentElement.scrollTop = winHeight
+            // console.log("滚动了一个视窗大小");
+          }
+        </script>
+        <!-- 音乐 -->
+        <div
+          style="
+            position: fixed;
+            top: 10px;
+            right: 16px;
+            z-index: 1;
+            cursor: pointer;
+          "
+          onclick="Music()"
+        >
+          <i
+            id="musiCtrl"
+            class="fa fa-music"
+            aria-hidden="true"
+            style="
+              color: #ff7979;
+              font-size: 25px;
+              width: 35px;
+              height: 35px;
+              border-style: solid;
+              border-radius: 50%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          ></i>
+        </div>
+        <!-- 音乐暂停播放 -->
+        <script>
+          function Music() {
+            let audio = document.querySelector('audio#myAudio')
+            if (audio.paused) {
+              audio.play()
+              document
+                .getElementById('musiCtrl')
+                .setAttribute('class', 'fa fa-music fa-spin')
+            } else {
+              audio.pause()
+              document
+                .getElementById('musiCtrl')
+                .setAttribute('class', 'fa fa-music')
+            }
+          }
+        </script>
+        <div id="cover">
+          <div id="navs">
+            <div id="control" style="color: #fff; display: none;">
+              <i
+                class="fa fa-arrow-left"
+                aria-hidden="true"
+                onclick="Toleft()"
+              ></i>
+              <i
+                class="fa fa-arrow-right"
+                aria-hidden="true"
+                onclick="Toright()"
+              ></i>
+            </div>
+            <!-- 轮播图 -->
+            <ul id="picContainer" style="transform: translateX(0px);">
+              <li><img src="./img/navs/01.jpg" /></li>
+              <li><img src="./img/navs/02.jpg" /></li>
+              <li><img src="./img/navs/03.jpg" /></li>
+              <li><img src="./img/navs/04.jpg" /></li>
+              <li><img src="./img/navs/05.jpg" /></li>
+              <li><img src="./img/navs/06.jpg" /></li>
+              <li><img src="./img/navs/07.jpg" /></li>
+              <li><img src="./img/navs/08.jpg" /></li>
+              <li><img src="./img/navs/09.jpg" /></li>
+              <li><img src="./img/navs/10.jpg" /></li>
+              <li><img src="./img/navs/11.jpg" /></li>
+              <li><img src="./img/navs/12.jpg" /></li>
+              <li><img src="./img/navs/13.jpg" /></li>
+              <li><img src="./img/navs/14.jpg" /></li>
+              <li><img src="./img/navs/15.jpg" /></li>
+              <li><img src="./img/navs/16.jpg" /></li>
+              <li><img src="./img/navs/17.jpg" /></li>
+              <li><img src="./img/navs/18.jpg" /></li>
+              <li><img src="./img/navs/19.jpg" /></li>
+              <li><img src="./img/navs/20.jpg" /></li>
+              <li><img src="./img/navs/21.jpg" /></li>
+              <li><img src="./img/navs/22.jpg" /></li>
+              <li><img src="./img/navs/23.jpg" /></li>
+              <li><img src="./img/navs/24.jpg" /></li>
+              <li><img src="./img/navs/25.jpg" /></li>
+            </ul>
+          </div>
+          <!-- 切换图片 -->
+          <script>
+            let img = document
+              .getElementById('cover')
+              .getElementsByTagName('img')
+            let NowImg = document.querySelector('#picContainer')
+            let NowImgPostion = document.defaultView.getComputedStyle(
+              NowImg,
+              null,
+            ).transform
+            //console.log(NowImgPostion);// 返回matrix( skew(1), scale(0,0), rolate(1), translate(0,0) )
+            let NowImgTranslateXY = FindTranslate(NowImgPostion)
+            //console.log(NowImgTranslateXY[0]);
+
+            function Toleft() {
+              // 去上一个
+              NowImgTranslateXY = FindTranslate(
+                document.defaultView.getComputedStyle(NowImg, null).transform,
+              )
+              if (NowImgTranslateXY[0] == 0) {
+                console.log('尾图')
+                NowImg.style.transform = `translateX(${
+                  -winWidth * (img.length - 1)
+                }px)`
+              } else {
+                console.log('上一张图')
+                NowImg.style.transform = `translateX(${
+                  NowImgTranslateXY[0] + winWidth
+                }px)`
+              }
+            }
+            function Toright() {
+              NowImgTranslateXY = FindTranslate(
+                document.defaultView.getComputedStyle(NowImg, null).transform,
+              )
+              if (NowImgTranslateXY[0] == -winWidth * (img.length - 1)) {
+                console.log('首图')
+                NowImg.style.transform = `translateX(0px)`
+              } else {
+                // console.log("下一张图");
+                NowImg.style.transform = `translateX(${
+                  NowImgTranslateXY[0] - winWidth
+                }px)`
+              }
+            }
+            //设置定时器，每50毫秒运行一次
+            function AutoMoveImg() {
+              setInterval(function () {
+                Toright()
+              }, 2000)
+            }
+            function FindTranslate(Style_transform) {
+              // 去除尾部括号
+              let str = Style_transform.replace(')', '')
+              // 分割成数组
+              let split = str.split(',')
+              // 取最后两个，并转换为数字
+              return [
+                Number(split[split.length - 2]),
+                Number(split[split.length - 1]),
+              ]
+            }
+          </script>
+
+          <!-- <video autoplay="autoplay" loop muted="muted" width="100%" height="100%" style="position: absolute;">
+						<source src="./videos/1.mp4" type="video/mp4"></source>
+					</video> -->
+          <audio id="myAudio" src="./music/囍（女生版）.mp3"></audio>
+          <!-- 循环歌单列表 -->
+          <script>
+            var audio = document.getElementById('myAudio')
+            var audio_list = [
+              './music/囍（女生版）.mp3',
+              './music/Bloom%20of%20Youth.mp3',
+              './music/Adagio%20for%20Summer%20Wind.mp3',
+              './music/我在那一角落患过伤风.mp3',
+            ]
+            audio.loop = false
+            var k = 1
+            audio.addEventListener(
+              'ended',
+              function () {
+                console.log(audio_list[k])
+                document
+                  .getElementById('myAudio')
+                  .setAttribute('src', `${audio_list[k]}`)
+                if (k < audio_list.length - 1) {
+                  k = k + 1
+                } else {
+                  k = 0
+                }
+              },
+              false,
+            )
+          </script>
+        </div>
+        <div id="vibrant">
+          <!-- logo -->
+          <img
+            src="./img/红色潇湘-株洲站.svg"
+            alt="logo"
+            oncontextmenu="return false;"
+            ondragstart="return false;"
+          />
+          <!-- 一言pai -->
+          <div id="siyueapi">
+            <script>
+              siyueapi()
+            </script>
+          </div>
+          <svg
+            viewBox="0 0 2880 1620"
+            height="100%"
+            preserveAspectRatio="xMaxYMax slice"
+          >
+            <polygon
+              opacity="0.4"
+              points="2000,1620 0,1620 0,0 600,0 "
+              style="fill: rgb(204, 52, 54);"
+            ></polygon>
+          </svg>
+
+          <div class="shade" style="background-color: rgb(204, 52, 54);"></div>
+        </div>
+      </div>
+      <!-- js -->
+      <script>
+        // 界面一加载就获取宽高
+        let ImgInterval
+        window.onload = function () {
+          initialize()
+          ImgInterval = setInterval(Toright, 3000)
+          getJSON(1)
+          getJSON(2)
+          getJSON(3)
+        }
+        function getJSON(index) {
+          var url = `pages/pages${index}.json` /*json文件url，本地的就写本地的位置，如果是服务器的就写服务器的路径*/
+          var request = new XMLHttpRequest()
+          request.open('get', url) /*设置请求方法与路径*/
+          request.send(null) /*不发送数据到服务器*/
+          request.onload = function () {
+            /*XHR对象获取到返回信息后执行*/
+            if (request.status == 200) {
+              /*返回状态为200，即为数据获取成功*/
+              var myjson = JSON.parse(request.responseText)
+              let MyPagesTitle = document.querySelectorAll(
+                `#navContent .news-show h1.page${index}`,
+              )
+              let MyPagesPreview = document.querySelectorAll(
+                `#navContent .news-show h1.page${index}+h3`,
+              )
+              let MyPagesTime = document.querySelectorAll(
+                `#navContent #page${index} .news-time`,
+              )
+              if (index == 1) {
+                let tempJson = myjson.pages1
+                for (let i = 0; i < tempJson.length; i++) {
+                  MyPagesTitle[i].innerHTML = tempJson[i].Title
+                  MyPagesPreview[i].innerHTML = tempJson[i].Introduction
+                  MyPagesTime[i].innerHTML = tempJson[i].Time
+                }
+              } else if (index == 2) {
+                let tempJson = myjson.pages2
+                for (let i = 0; i < tempJson.length; i++) {
+                  MyPagesTitle[i].innerHTML = tempJson[i].Title
+                  MyPagesPreview[i].innerHTML = tempJson[i].Introduction
+                  MyPagesTime[i].innerHTML = tempJson[i].Time
+                }
+              } else if (index == 3) {
+                let tempJson = myjson.pages3
+                for (let i = 0; i < tempJson.length; i++) {
+                  MyPagesTitle[i].innerHTML = tempJson[i].Title
+                  MyPagesPreview[i].innerHTML = tempJson[i].Introduction
+                  MyPagesTime[i].innerHTML = tempJson[i].Time
+                }
+              }
+            }
+          }
+        }
+
+        function initialize() {
+          // alert("页面加载完毕");
+          // 获取宽高的返回值
+          ;[winWidth, winHeight] = getWinsize()
+          // 获取img数量
+          let img = document.getElementById('cover').getElementsByTagName('img')
+          // 设置img外嵌套的li大小（根据img数量自适应）
+          // lis有多个元素，不能一条语句设置样式，得循环到每一个li
+          let lis = document.getElementById('cover').getElementsByTagName('li')
+          for (i = 0; i < img.length; i++) {
+            lis[i].setAttribute(
+              'style',
+              `height: 100%;float: left;width: calc(100% / ${img.length})`,
+            )
+          }
+          // 设置轮播控制器的位置
+          document.getElementById('control').style.bottom = '30px'
+          document.getElementById('control').style.left = `calc(${winWidth}px)`
+
+          // 设置外包裹容器大小
+          document
+            .getElementById('cover')
+            .setAttribute(
+              'style',
+              `width: calc(${winWidth}px * ${img.length});height: ${winHeight}px`,
+            )
+
+          // mainshow卡片初始化
+          let myShowWrap = document.querySelector('#mainShow .wrap')
+          let myShowBg = document.querySelectorAll('.show-background')
+          myShowWrap.style.width = `${winWidth}px`
+          for (var i = 0; i < myShowBg.length; i++) {
+            myShowBg[i].style.width = `${(winWidth * 0.85) / 3 - 30}px`
+          }
+        }
+
+        window.addEventListener('resize', function () {
+          // 轮播控制
+          clearInterval(ImgInterval) // 关闭定时器
+          NowImg.style.transform = `translateX(0px)` // 重置窗口
+          ImgInterval = setInterval(Toright, 3000) // 开启定时器
+
+          // 获取img数量
+          let img = document.getElementById('cover').getElementsByTagName('img')
+          // 获取宽高的返回值
+          ;[winWidth, winHeight] = getWinsize()
+          // console.log(winWidth,winHeight);
+          document
+            .getElementById('cover')
+            .setAttribute(
+              'style',
+              `width: calc(${winWidth}px * ${img.length});height: ${winHeight}px`,
+            )
+
+          // 图片控制器
+          document.getElementById('control').style.left = `calc(${winWidth}px)`
+
+          // mainShow中的wrap类宽度自适应
+          let myShowWrap = document.querySelector('#mainShow .wrap')
+          let myShowBg = document.querySelectorAll('.show-background')
+          myShowWrap.style.width = `${winWidth}px`
+          for (var i = 0; i < myShowBg.length; i++) {
+            myShowBg[i].style.width = `${(winWidth * 0.85) / 3 - 30}px`
+          }
+        })
+
+        // 获取视窗尺寸
+        function getWinsize() {
+          // 获取窗口宽度
+          if (window.innerWidth) winWidth = window.innerWidth
+          else if (document.body && document.body.clientWidth)
+            winWidth = document.body.clientWidth
+          // 获取窗口高度
+          if (window.innerHeight) winHeight = window.innerHeight
+          else if (document.body && document.body.clientHeight)
+            winHeight = document.body.clientHeight
+          // 通过深入 Document 内部对 body 进行检测，获取窗口大小
+          if (
+            document.documentElement &&
+            document.documentElement.clientHeight &&
+            document.documentElement.clientWidth
+          ) {
+            winHeight = document.documentElement.clientHeight
+            winWidth = document.documentElement.clientWidth
+          }
+          return [winWidth, winHeight]
+        }
+      </script>
+    </section>
+
+    <!-- main -->
+    <section id="mainShow">
+      <script>
+        function video1() {
+          let myShowBg = document.querySelector('.show-background')
+          let myMainShow = document.querySelector('#mainShow .wrap')
+          myMainShow.setAttribute('style', `transform:`)
+          // console.log(myShowBg.style.width);
+          if (myMainShow.style.transform == '') {
+          } else {
+            myMainShow.setAttribute('style', `transform: translateX(0px)`)
+          }
+        }
+        function video2() {
+          let myShowBg = document.querySelector('.show-background')
+          let myMainShow = document.querySelector('#mainShow .wrap')
+          myMainShow.setAttribute(
+            'style',
+            `transform: translateX(calc((-${myShowBg.style.width} - 30px) * 2))`,
+          )
+        }
+      </script>
+      <span>
+        见证——株洲故事
+        <i class="fa fa-arrow-left" aria-hidden="true" onclick="video1()"></i>
+        <i class="fa fa-arrow-right" aria-hidden="true" onclick="video2()"></i>
+      </span>
+      <div class="container" title="PC端滑动下面的滚动条，以查看更多内容">
+        <div class="wrap">
+          <script>
+            let videoTitleList = {
+              1: '燃烧岁月',
+              2: '成长',
+              3: '筑梦蔚蓝',
+              4: '家在湘江边',
+              5: '守望家园',
+            }
+            function video(videolist) {
+              audio.pause()
+              let videoTitle = videoTitleList[videolist]
+              layer.open({
+                type: 2,
+                title: `${videoTitle}`,
+                shadeClose: true,
+                shade: 0.6,
+                maxmin: false, //开启最大化最小化按钮
+                area: [`${winWidth * 0.8}px`, `${winHeight * 0.8}px`],
+                content: `./video_iframe.html?videolist=${videolist}`,
+              })
+            }
+          </script>
+          <div class="main-show">
+            <a href="javascript:void(0);" onclick="video(1)">
+              <div class="show-background"></div>
+            </a>
+            <h1>燃烧岁月</h1>
+          </div>
+          <div class="main-show">
+            <a href="javascript:void(0);" onclick="video(2)">
+              <div class="show-background"></div>
+            </a>
+            <h1>成长</h1>
+          </div>
+          <div class="main-show">
+            <a href="javascript:void(0);" onclick="video(3)">
+              <div class="show-background"></div>
+            </a>
+            <h1>筑梦蔚蓝</h1>
+          </div>
+          <div class="main-show">
+            <a href="javascript:void(0);" onclick="video(4)">
+              <div class="show-background"></div>
+            </a>
+            <h1>家在湘江边</h1>
+          </div>
+          <div class="main-show">
+            <a href="javascript:void(0);" onclick="video(5)">
+              <div class="show-background"></div>
+            </a>
+            <h1>守望家园</h1>
+          </div>
+        </div>
+      </div>
+      <!-- 背景图片标题 -->
+      <script>
+        let myShowBg = document.querySelectorAll('.show-background')
+        let ShowBgTitle = {
+          0: '三三一厂',
+          1: '株洲大桥',
+          2: '株洲铁路货运编组站',
+          3: '株洲高新技术产业开发区',
+          4: '芦淞桥',
+        }
+        // for (let i in ShowBgTitle) {
+        // 	console.log(myShowBg[i].title=ShowBgTitle[i])
+        // }
+      </script>
+      <!-- 鼠标拖动事件 -->
+    </section>
+
+    <div style="display: flex; position: relative; width: 85%; margin: 0 auto;">
+      <section id="nav">
+        <div class="navbar">
+          <ul>
+            <li><button id="0">燃烧岁月</button></li>
+            <li><button id="1">筑梦蔚蓝</button></li>
+            <li><button id="2" class="active">守望家园</button></li>
+            <!-- <li><button id="3">文化</button></li> -->
+          </ul>
+        </div>
+        <script>
+          $(document).on('click', '.navbar button', function (event) {
+            event.preventDefault() // 阻止它的默认行为的发生而发生其他的事情
+            let t = $(this)
+            if (!t.hasClass('active')) {
+              // 先去除所有的激活类
+              $('.navbar button').removeClass('active')
+              // 再给点击事件的按钮添加激活类
+              t.addClass('active')
+              let tid = t[0].id
+              // console.log(tid);
+              // 绑定对应的ul块
+              $('#navContent ul').addClass('hidden')
+              $('#navContent ul')[tid].className = ''
+            }
+          })
+        </script>
+        <main id="navContent">
+          <script>
+            let pageTitleList = [
+              {
+                1: '学史明理，从革命先辈事迹中汲取砥砺前行的精神力量',
+                2: '炎陵红军标语博物馆：见字如面 定格激情燃烧的岁月',
+                3: '“三野虎将”陈士榘在茶陵的传奇故事',
+                4: '株洲桥梁工厂创建纪实',
+                5: '时代的呼唤 人民的心声——《株洲日报》创刊记事',
+                6: '坚固坡上映山红——株洲妇运先驱汪起凤',
+                7: '农业学大寨时期的茶陵“四大水利工程”',
+              },
+              {
+                1: '湖南卫视为何频频“点赞株洲”？',
+                2: '生态环境保护督察“回头看”',
+                3: '海报丨株洲：创新之城',
+                4: '书记、市长对这件事动了真格！',
+                5: '一次比一次好！株洲问题整改获上级肯定',
+                6: '环保督察幕后的最美准妈妈',
+                7: '环境问题整改后，这个地方“火”了！',
+              },
+              {
+                1: '走进株洲',
+                2: '我市召开首场新冠肺炎疫情防控工作新闻发布会',
+                3: '株洲市举行第二场新冠肺炎疫情防控工作新闻发布会',
+                4: '云龙核酸采样78307份 结果全部为阴性',
+                5: '争分夺秒做好 流调溯源和核酸检测',
+                6: '市政府办公室派驻防疫工作队深入社区一线参加疫情防控',
+                7: '春暖潇湘',
+              },
+            ]
+            function pages(page, pagelist) {
+              audio.pause()
+              let pageTitle = pageTitleList[page - 1][pagelist]
+              console.log(pageTitle)
+              layer.open({
+                type: 2,
+                title: `${pageTitle}`,
+                shadeClose: true,
+                shade: 0.6,
+                maxmin: true, //开启最大化最小化按钮
+                area: [`${winWidth * 0.8}px`, `${winHeight * 0.8}px`],
+                content: `./page.html?page=${page}&Title=${pageTitle}`,
+              })
+            }
+          </script>
+          <ul id="page1" class="hidden">
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="https://imgs.rednet.cn/data/24/IMAGE_TENANT_LIB/IMAGE/7000670/2021/4/2/94302c5264384e2b911db2419278b006.jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page1" onclick="pages(1,1)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="https://i.loli.net/2021/10/02/QJvoYequaXG69dW.jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page1" onclick="pages(1,2)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="https://i.loli.net/2021/10/01/7UXwN9ptI5DEVqa.jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page1" onclick="pages(1,3)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="https://i.loli.net/2021/10/02/dcJVrgPF3iARoUY.jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page1" onclick="pages(1,4)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="https://i.loli.net/2021/10/02/tUJySaYTDIuHxWM.jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page1" onclick="pages(1,5)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="https://i.loli.net/2021/10/02/HAYt5BFymXC7iGl.jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page1" onclick="pages(1,6)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="https://i.loli.net/2021/10/02/ULPqiYWpersZO43.jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page1" onclick="pages(1,7)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <ul id="page2" class="hidden">
+            <li class="news-item Myhot">
+              <div class="news-img">
+                <img
+                  src="https://i.loli.net/2021/10/02/YPh26pBd5yGqAKj.gif"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page2" onclick="pages(2,1)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="./img/pageCovers/中央生态环保督察“回头看”.jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page2" onclick="pages(2,2)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="https://img.rednet.cn/2021/05-18/fd1b2e2f-5ffe-4280-8ddb-a60cc125cef1.png"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page2" onclick="pages(2,3)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="http://www.zhuzhou.gov.cn/zzcms/DFS//file/2021/05/06/20210506105838435dtpdx1.jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page2" onclick="pages(2,4)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="http://www.zhuzhou.gov.cn/zzcms/DFS//file/2021/04/30/20210430110156436nhvtav.jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page2" onclick="pages(2,5)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="http://www.zhuzhou.gov.cn/zzcms/DFS//network/c22353/i1693691/1619671717665kw27cn.jpeg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page2" onclick="pages(2,6)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="http://www.zhuzhou.gov.cn/zzcms/DFS//file/2021/04/26/20210426093308717zmltqg.jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page2" onclick="pages(2,7)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <ul id="page3">
+            <li class="news-item Myhot">
+              <div class="news-img">
+                <img
+                  src="http://shb.hunan.gov.cn/jxxx/szjj/szjj/zhuzhou/201908/W020190829562117913034.jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page3" onclick="pages(3,1)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="http://www.zhuzhou.gov.cn/zzcms/DFS//file/2021/08/09/20210809091306190rpfddp.jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page3" onclick="pages(3,2)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="http://www.zhuzhou.gov.cn/zzcms/DFS//file/2021/08/11/202108111056078157jmejg.jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page3" onclick="pages(3,3)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="http://www.zhuzhou.gov.cn/zzcms/DFS//file/2021/08/07/202108071534074365ml58p.jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page3" onclick="pages(3,4)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="http://www.zhuzhou.gov.cn/zzcms/DFS//file/2021/08/07/20210807153321644d9iibg.jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page3" onclick="pages(3,5)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="http://www.zhuzhou.gov.cn/zzcms/DFS//file/2021/08/07/20210807145544820v812rf.jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page3" onclick="pages(3,6)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+            <li class="news-item">
+              <div class="news-img">
+                <img
+                  src="https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2021%2F0422%2F8436fd2ej00qry4f6001ec000hs00crc.jpg&thumbnail=650x2147483647&quality=80&type=jpg"
+                  alt="新闻头图"
+                />
+              </div>
+              <div class="news-content">
+                <div class="news-show">
+                  <h1 class="title page3" onclick="pages(3,7)">新闻标题</h1>
+                  <h3>新闻简介</h3>
+                </div>
+                <div class="news-details">
+                  <span class="news-time">三天前</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <!-- <script>
+						// 文章标题点击事件
+						let news_show_h1 = document.querySelectorAll(".news-show h1");
+						if(news_show_h1) {
+							for (let i=0;i<news_show_h1.length;i++) {
+								console.log(`.news-show h1.${news_show_h1[i].className.slice(0,5)}`);
+								document.querySelector(`.news-show h1.${news_show_h1[i].className.slice(0,5)}`).addEventListener('click', function () {
+									console.log(1);
+									// 	if (document.getElementById("tt")){
+									// }
+									// document.querySelector("a.layui-layer-max").addEventListener('click', function () {
+									// 	console.log(1);
+									// });
+								});
+							}
+						}
+					</script> -->
+        </main>
+      </section>
+      <section id="nav-side">
+        <div id="tools">
+          <iframe
+            src="https://map.icl.moe"
+            height="500"
+            frameborder="no"
+            border="0"
+            width="100%"
+          ></iframe>
+          <div id="he-plugin-standard"></div>
+          <script>
+            WIDGET = {
+              CONFIG: {
+                layout: '2',
+                width: '100%',
+                height: '',
+                background: '2',
+                dataColor: '000000',
+                borderRadius: '5',
+                key: 'fd608a5208824720bad07a6eff980119',
+              },
+            }
+          </script>
+          <script src="https://widget.qweather.net/standard/static/js/he-standard-common.js?v=2.0"></script>
+        </div>
+      </section>
+    </div>
+
+    <!-- footer -->
+    <section id="footer">
+      <div class="container">
+        <div id="logo">
+          <img src="./img/logo/logo-1.svg" />
+        </div>
+        <div id="about">
+          <span>
+            <a target="_blank" href="http://www.zhuzhou.gov.cn/">
+              株洲市人民政府
+            </a>
+          </span>
+          <span>
+            <a target="_blank" href="http://www.zhuzhou.gov.cn/c22348/">
+              生态环境保护督察
+            </a>
+          </span>
+          <span>
+            <a target="_blank" href="http://zz.rene.pw/html/">
+              株洲数字党史方志馆
+            </a>
+          </span>
+          <span>
+            <a
+              target="_blank"
+              href="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzI2MDQ0NzkwMQ==&mid=2247500680&idx=1&sn=4499bb42d633a965487ce43de3b1bd6c&send_time="
+            >
+              史志株洲
+            </a>
+          </span>
+          <span>
+            <a
+              target="_blank"
+              href="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzI2ODMxNTMxMA==&mid=2247526176&idx=1&sn=2741c3f9e7c1dcd228337636f7a06a9a&send_time="
+            >
+              株洲生态环境
+            </a>
+          </span>
+        </div>
+        <div id="myQrcode">
+          <img src="./img/footer/qrcode.jpg" alt="公众号" />
+        </div>
+      </div>
+    </section>
+  </body>
+  <script>
+    function isMobile() {
+      var ua = navigator.userAgent.toLowerCase()
+      var StringPhoneReg =
+        '\\b(ip(hone|od)|android|opera m(ob|in)i' +
+        '|windows (phone|ce)|blackberry' +
+        '|s(ymbian|eries60|amsung)|p(laybook|alm|rofile/midp' +
+        '|laystation portable)|nokia|fennec|htc[-_]' +
+        '|mobile|up.browser|[1-4][0-9]{2}x[1-4][0-9]{2})\\b'
+      var StringTableReg =
+        '\\b(ipad|tablet|(Nexus 7)|up.browser' +
+        '|[1-4][0-9]{2}x[1-4][0-9]{2})\\b'
+
+      console.log(ua)
+      var isIphone = ua.match(StringPhoneReg),
+        isTable = ua.match(StringTableReg),
+        isMobile = isIphone || isTable
+      let myFistsvg = document.querySelector('#vibrant svg')
+      let myFistapi = document.querySelector('#vibrant #siyueapi')
+      let myFistLoge = document.querySelector('#vibrant img')
+      if (isMobile) {
+        alert('在电脑上浏览更佳哦！-本站网址：http://49.235.95.232/red/')
+        myFistsvg.setAttribute('style', 'display:none')
+        myFistapi.setAttribute('style', 'font-size:30px')
+        myFistLoge.setAttribute('style', 'width:60%')
+        return true
+      } else {
+        return false
+      }
+    }
+    isMobile()
+  </script>
+</html>

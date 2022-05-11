@@ -1,0 +1,21 @@
+@media screen and (max-width: 780px) {
+  #nav-side {
+    display: none;
+  }
+}
+#nav-side {
+  position: relative;
+  width: calc(100% / 3 * 1);
+  overflow: hidden;
+  margin: 20px 0 0 10px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+#nav-side #tools {
+  height: auto;
+  margin: 20px 0;
+}
+#nav-side #tools #he-plugin-standard {
+  width: 100%!important;
+  border-top: 1px solid rgba(239, 239, 239, 0.8) !important;
+}
